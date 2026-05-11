@@ -1,0 +1,28 @@
+{
+  "name": "sport-hub",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "dev:api": "cd apps/api && npm run start:dev",
+    "dev:mobile": "cd apps/mobile && npx expo start",
+    "db:start": "cd infrastructure/docker && docker-compose up -d",
+    "db:stop": "cd infrastructure/docker && docker-compose down",
+    "db:restart": "cd infrastructure/docker && docker-compose restart",
+    "build:shared": "cd packages/shared && npm run build"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

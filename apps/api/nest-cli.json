@@ -1,0 +1,9 @@
+{
+  "$schema": "https://nestjs.org/schema.json",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "assets": ["**/*.json"]
+  }
+}

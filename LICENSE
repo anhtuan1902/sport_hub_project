@@ -1,0 +1,19 @@
+{
+  "name": "sport-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sport Hub - Ứng dụng đặt sân thể thao",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "sport",
+    "booking",
+    "court",
+    "nestjs",
+    "react-native"
+  ],
+  "author": "Sport Hub Team",
+  "license": "MIT"
+}
