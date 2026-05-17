@@ -58,10 +58,11 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   const port = process.env.PORT || 3000;
-  await app.listen(port);
+  const host = process.env.HOST || '0.0.0.0';
+  await app.listen(port, host);
 
   console.log('='.repeat(50));
-  console.log(`🚀 Server is running on http://localhost:${port}`);
+  console.log(`🚀 Server is running on http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`);
   console.log(`📚 Swagger docs at http://localhost:${port}/docs`);
   console.log('='.repeat(50));
 }

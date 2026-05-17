@@ -26,7 +26,8 @@ export class AuthService {
   private readonly logger = new Logger(AuthService.name);
   private readonly saltRounds = 12;
   private readonly accessTokenExpiry = '15m';
-  private readonly refreshTokenExpiry = '7d';
+  private readonly refreshTokenExpiryDefault = '7d';
+  private readonly refreshTokenExpiryExtended = '30d';
 
   constructor(
     @InjectRepository(User)
@@ -114,7 +115,7 @@ export class AuthService {
 
     await this.updateLastLogin(user.id);
 
-    const tokens = await this.generateTokens(user);
+    const tokens = await this.generateTokens(user, dto.rememberMe);
 
     return {
       user: this.toUserResponse(user),
@@ -296,12 +297,14 @@ export class AuthService {
     }
   }
 
-  private async generateTokens(user: User): Promise<TokenResponseDto> {
+  private async generateTokens(user: User, rememberMe?: boolean): Promise<TokenResponseDto> {
     const payload = {
       sub: user.id,
       email: user.email,
       role: 'player',
     };
+
+    const refreshTokenExpiry = rememberMe ? this.refreshTokenExpiryExtended : this.refreshTokenExpiryDefault;
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
@@ -310,7 +313,7 @@ export class AuthService {
       ),
       this.jwtService.signAsync(
         { ...payload, type: 'refresh' },
-        { expiresIn: this.refreshTokenExpiry },
+        { expiresIn: refreshTokenExpiry },
       ),
     ]);
 
